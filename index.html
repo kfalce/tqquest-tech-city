@@ -563,169 +563,224 @@ const trees = [
 // ========================================
 
 function drawWorld() {
+    // =========================
+    // GRASS BASE
+    // =========================
+    ctx.fillStyle = "#6fbd68";
+    ctx.fillRect(0, 0, WORLD_W, WORLD_H);
 
-    // GRASS
+    // Soft grass patches
+    ctx.fillStyle = "rgba(255,255,255,0.035)";
 
-    ctx.fillStyle =
-        "#8ed081";
-
-    ctx.fillRect(
-        0,
-        0,
-        WORLD_WIDTH,
-        WORLD_HEIGHT
-    );
-
-
-    // LIGHTER GRASS PATCHES
-
-    ctx.fillStyle =
-        "#a5df91";
-
-    for (
-        let x = 0;
-        x < WORLD_WIDTH;
-        x += 300
-    ) {
-
-        for (
-            let y = 0;
-            y < WORLD_HEIGHT;
-            y += 300
-        ) {
-
-            ctx.fillRect(
-                x,
-                y,
-                150,
-                150
-            );
-
+    for (let x = 40; x < WORLD_W; x += 180) {
+        for (let y = 40; y < WORLD_H; y += 150) {
+            ctx.fillRect(x, y, 90, 55);
         }
-
     }
 
+    // =========================
+    // ROADS
+    // =========================
 
-    // MAIN ROADS
+    // Main horizontal roads
+    ctx.fillStyle = "#414b5b";
 
-    ctx.fillStyle =
-        "#d9d9d9";
+    ctx.fillRect(0, 300, WORLD_W, 110);
+    ctx.fillRect(0, 880, WORLD_W, 110);
+    ctx.fillRect(0, 1430, WORLD_W, 110);
 
-    // Horizontal
+    // Main vertical roads
+    ctx.fillRect(250, 0, 110, WORLD_H);
+    ctx.fillRect(1120, 0, 110, WORLD_H);
+    ctx.fillRect(1530, 0, 110, WORLD_H);
+    ctx.fillRect(2050, 0, 110, WORLD_H);
 
-    ctx.fillRect(
-        0,
-        820,
-        WORLD_WIDTH,
-        160
-    );
-
-    // Vertical
-
-    ctx.fillRect(
-        1120,
-        0,
-        160,
-        WORLD_HEIGHT
-    );
-
-
-    // ROAD CENTER LINES
-
-    ctx.strokeStyle =
-        "#ffffff";
-
-    ctx.lineWidth = 8;
-
-    ctx.setLineDash([
-        35,
-        25
-    ]);
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        0,
-        900
-    );
-
-    ctx.lineTo(
-        WORLD_WIDTH,
-        900
-    );
-
-    ctx.stroke();
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        1200,
-        0
-    );
-
-    ctx.lineTo(
-        1200,
-        WORLD_HEIGHT
-    );
-
-    ctx.stroke();
-
-
-    ctx.setLineDash([]);
-
-
+    // =========================
     // SIDEWALKS
+    // =========================
 
-    ctx.fillStyle =
-        "#eeeeee";
+    ctx.fillStyle = "#d7d9d6";
 
-    ctx.fillRect(
-        0,
-        805,
-        WORLD_WIDTH,
-        15
-    );
+    // Horizontal sidewalks
+    ctx.fillRect(0, 285, WORLD_W, 15);
+    ctx.fillRect(0, 410, WORLD_W, 15);
 
-    ctx.fillRect(
-        0,
-        980,
-        WORLD_WIDTH,
-        15
-    );
+    ctx.fillRect(0, 865, WORLD_W, 15);
+    ctx.fillRect(0, 990, WORLD_W, 15);
 
-    ctx.fillRect(
-        1105,
-        0,
-        15,
-        WORLD_HEIGHT
-    );
+    ctx.fillRect(0, 1415, WORLD_W, 15);
+    ctx.fillRect(0, 1540, WORLD_W, 15);
 
-    ctx.fillRect(
-        1280,
-        0,
-        15,
-        WORLD_HEIGHT
-    );
+    // Vertical sidewalks
+    ctx.fillRect(235, 0, 15, WORLD_H);
+    ctx.fillRect(360, 0, 15, WORLD_H);
 
+    ctx.fillRect(1105, 0, 15, WORLD_H);
+    ctx.fillRect(1230, 0, 15, WORLD_H);
 
+    ctx.fillRect(1515, 0, 15, WORLD_H);
+    ctx.fillRect(1640, 0, 15, WORLD_H);
+
+    ctx.fillRect(2035, 0, 15, WORLD_H);
+    ctx.fillRect(2160, 0, 15, WORLD_H);
+
+    // =========================
+    // ROAD LANE MARKINGS
+    // =========================
+
+    ctx.fillStyle = "#f7d85a";
+
+    // Horizontal lane markings
+    for (let x = 0; x < WORLD_W; x += 80) {
+        ctx.fillRect(x, 353, 42, 5);
+        ctx.fillRect(x, 933, 42, 5);
+        ctx.fillRect(x, 1483, 42, 5);
+    }
+
+    // Vertical lane markings
+    for (let y = 0; y < WORLD_H; y += 80) {
+        ctx.fillRect(303, y, 5, 42);
+        ctx.fillRect(1173, y, 5, 42);
+        ctx.fillRect(1583, y, 5, 42);
+        ctx.fillRect(2103, y, 5, 42);
+    }
+
+    // =========================
+    // SMALL GRASS DETAILS
+    // =========================
+
+    ctx.strokeStyle = "rgba(35,100,45,0.28)";
+    ctx.lineWidth = 2;
+
+    for (let x = 70; x < WORLD_W; x += 120) {
+        for (let y = 80; y < WORLD_H; y += 110) {
+
+            // Don't clutter the roads
+            const onHorizontalRoad =
+                (y > 280 && y < 430) ||
+                (y > 860 && y < 1000) ||
+                (y > 1410 && y < 1550);
+
+            const onVerticalRoad =
+                (x > 225 && x < 380) ||
+                (x > 1095 && x < 1250) ||
+                (x > 1505 && x < 1660) ||
+                (x > 2025 && x < 2180);
+
+            if (!onHorizontalRoad && !onVerticalRoad) {
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x + 4, y - 8);
+                ctx.moveTo(x + 6, y);
+                ctx.lineTo(x + 10, y - 7);
+                ctx.stroke();
+            }
+        }
+    }
+
+    // =========================
+    // CROSSWALKS
+    // =========================
+
+    ctx.fillStyle = "rgba(255,255,255,0.72)";
+
+    // Central intersections
+    const intersections = [
+        [250, 300],
+        [1120, 300],
+        [1530, 300],
+        [2050, 300],
+        [250, 880],
+        [1120, 880],
+        [1530, 880],
+        [2050, 880],
+        [250, 1430],
+        [1120, 1430],
+        [1530, 1430],
+        [2050, 1430]
+    ];
+
+    intersections.forEach(function(point) {
+        const x = point[0];
+        const y = point[1];
+
+        for (let i = 0; i < 5; i++) {
+            ctx.fillRect(
+                x - 55 + i * 22,
+                y - 60,
+                12,
+                32
+            );
+
+            ctx.fillRect(
+                x - 55 + i * 22,
+                y + 28,
+                12,
+                32
+            );
+        }
+    });
+
+    // =========================
+    // CITY DECOR
+    // =========================
+
+    // Street lamps
+    const lamps = [
+        [180, 500],
+        [500, 500],
+        [850, 500],
+        [1450, 500],
+        [1800, 500],
+        [2250, 500],
+
+        [180, 1080],
+        [800, 1080],
+        [1450, 1080],
+        [1850, 1080],
+        [2250, 1080],
+
+        [180, 1620],
+        [800, 1620],
+        [1450, 1620],
+        [1850, 1620],
+        [2250, 1620]
+    ];
+
+    lamps.forEach(function(lamp) {
+        const x = lamp[0];
+        const y = lamp[1];
+
+        // pole
+        ctx.fillStyle = "#3a4250";
+        ctx.fillRect(x - 3, y - 28, 6, 28);
+
+        // light
+        ctx.fillStyle = "#ffe98a";
+        ctx.beginPath();
+        ctx.arc(x, y - 32, 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        // glow
+        ctx.fillStyle = "rgba(255,233,138,0.12)";
+        ctx.beginPath();
+        ctx.arc(x, y - 32, 22, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    // =========================
     // BUILDINGS
+    // =========================
 
-    buildings.forEach(
-        drawBuilding
-    );
+    buildings.forEach(drawBuilding);
 
-
+    // =========================
     // TREES
+    // =========================
 
-    trees.forEach(
-        tree => drawTree(
-            tree[0],
-            tree[1]
-        )
-    );
-
+    trees.forEach(function(tree) {
+        drawTree(tree.x, tree.y);
+    });
 }
 
 
