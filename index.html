@@ -734,131 +734,119 @@ function drawWorld() {
 // ========================================
 
 function drawBuilding(building) {
-
-    const {
-
-        x,
-        y,
-        w,
-        h,
-        color,
-        roof,
-        name,
-        icon
-
-    } = building;
-
-
-    // SHADOW
-
-    ctx.fillStyle =
-        "rgba(0,0,0,.18)";
-
+    // Building shadow
+    ctx.fillStyle = "rgba(0,0,0,0.22)";
     ctx.fillRect(
-        x + 12,
-        y + 14,
-        w,
-        h
+        building.x + 10,
+        building.y + 14,
+        building.w,
+        building.h
     );
 
-
-    // BUILDING
-
-    ctx.fillStyle =
-        color;
-
+    // Main building
+    ctx.fillStyle = building.color || "#4f6fae";
     ctx.fillRect(
-        x,
-        y,
-        w,
-        h
+        building.x,
+        building.y,
+        building.w,
+        building.h
     );
 
-
-    // ROOF
-
-    ctx.fillStyle =
-        roof;
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        x - 20,
-        y
+    // Building top / roof
+    ctx.fillStyle = "rgba(255,255,255,0.12)";
+    ctx.fillRect(
+        building.x,
+        building.y,
+        building.w,
+        28
     );
 
-    ctx.lineTo(
-        x + w / 2,
-        y - 55
+    // Roof highlight
+    ctx.fillStyle = "rgba(255,255,255,0.18)";
+    ctx.fillRect(
+        building.x + 8,
+        building.y + 8,
+        building.w - 16,
+        5
     );
 
-    ctx.lineTo(
-        x + w + 20,
-        y
-    );
-
-    ctx.closePath();
-
-    ctx.fill();
-
-
-    // WINDOWS
-
-    ctx.fillStyle =
-        "#ffffff";
+    // Windows
+    const windowWidth = 32;
+    const windowHeight = 25;
+    const gapX = 18;
+    const gapY = 18;
 
     for (
-        let wx = x + 35;
-        wx < x + w - 25;
-        wx += 70
+        let wx = building.x + 22;
+        wx < building.x + building.w - 35;
+        wx += windowWidth + gapX
     ) {
-
         for (
-            let wy = y + 65;
-            wy < y + h - 40;
-            wy += 65
+            let wy = building.y + 50;
+            wy < building.y + building.h - 70;
+            wy += windowHeight + gapY
         ) {
+            // Window frame
+            ctx.fillStyle = "rgba(10,25,50,0.35)";
+            ctx.fillRect(wx - 3, wy - 3, windowWidth + 6, windowHeight + 6);
 
-            ctx.fillRect(
-                wx,
-                wy,
-                38,
-                30
-            );
+            // Glass
+            ctx.fillStyle = "#8ed8ff";
+            ctx.fillRect(wx, wy, windowWidth, windowHeight);
 
+            // Glass shine
+            ctx.fillStyle = "rgba(255,255,255,0.45)";
+            ctx.fillRect(wx + 5, wy + 4, 7, windowHeight - 8);
         }
-
     }
 
+    // Main entrance
+    const doorWidth = 48;
+    const doorHeight = 58;
+    const doorX = building.x + building.w / 2 - doorWidth / 2;
+    const doorY = building.y + building.h - doorHeight;
 
-    // SIGN
+    ctx.fillStyle = "#17243d";
+    ctx.fillRect(doorX, doorY, doorWidth, doorHeight);
 
-    ctx.fillStyle =
-        "rgba(255,255,255,.95)";
+    ctx.fillStyle = "#6fc9ff";
+    ctx.fillRect(doorX + 7, doorY + 7, doorWidth - 14, doorHeight - 7);
 
+    // Door handle
+    ctx.fillStyle = "#ffd43b";
+    ctx.beginPath();
+    ctx.arc(
+        doorX + doorWidth - 11,
+        doorY + doorHeight / 2,
+        3,
+        0,
+        Math.PI * 2
+    );
+    ctx.fill();
+
+    // Sign background
+    ctx.fillStyle = "rgba(255,255,255,0.96)";
     ctx.fillRect(
-        x + 20,
-        y + h - 50,
-        w - 40,
-        38
+        building.x + 14,
+        building.y + building.h - 34,
+        building.w - 28,
+        27
     );
 
-
-    ctx.fillStyle =
-        "#333";
-
-    ctx.font =
-        "bold 18px Arial";
-
-    ctx.textAlign =
-        "center";
+    // Sign text
+    ctx.fillStyle = "#17243d";
+    ctx.font = "bold 15px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
 
     ctx.fillText(
-        icon + " " + name,
-        x + w / 2,
-        y + h - 24
+        building.icon + " " + building.name,
+        building.x + building.w / 2,
+        building.y + building.h - 20
     );
 
+    ctx.textAlign = "left";
+    ctx.textBaseline = "alphabetic";
 }
 
 
