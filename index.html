@@ -567,13 +567,13 @@ function drawWorld() {
     // GRASS BASE
     // =========================
     ctx.fillStyle = "#6fbd68";
-    ctx.fillRect(0, 0, WORLD_W, WORLD_H);
+    ctx.fillRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
     // Soft grass patches
     ctx.fillStyle = "rgba(255,255,255,0.035)";
 
-    for (let x = 40; x < WORLD_W; x += 180) {
-        for (let y = 40; y < WORLD_H; y += 150) {
+    for (let x = 40; x < WORLD_WIDTH; x += 180) {
+        for (let y = 40; y < WORLD_HEIGHT; y += 150) {
             ctx.fillRect(x, y, 90, 55);
         }
     }
@@ -585,15 +585,15 @@ function drawWorld() {
     // Main horizontal roads
     ctx.fillStyle = "#414b5b";
 
-    ctx.fillRect(0, 300, WORLD_W, 110);
-    ctx.fillRect(0, 880, WORLD_W, 110);
-    ctx.fillRect(0, 1430, WORLD_W, 110);
+    ctx.fillRect(0, 300, WORLD_WIDTH, 110);
+    ctx.fillRect(0, 880, WORLD_WIDTH, 110);
+    ctx.fillRect(0, 1430, WORLD_WIDTH, 110);
 
     // Main vertical roads
-    ctx.fillRect(250, 0, 110, WORLD_H);
-    ctx.fillRect(1120, 0, 110, WORLD_H);
-    ctx.fillRect(1530, 0, 110, WORLD_H);
-    ctx.fillRect(2050, 0, 110, WORLD_H);
+    ctx.fillRect(250, 0, 110, WORLD_HEIGHT);
+    ctx.fillRect(1120, 0, 110, WORLD_HEIGHT);
+    ctx.fillRect(1530, 0, 110, WORLD_HEIGHT);
+    ctx.fillRect(2050, 0, 110, WORLD_HEIGHT);
 
     // =========================
     // SIDEWALKS
@@ -602,27 +602,27 @@ function drawWorld() {
     ctx.fillStyle = "#d7d9d6";
 
     // Horizontal sidewalks
-    ctx.fillRect(0, 285, WORLD_W, 15);
-    ctx.fillRect(0, 410, WORLD_W, 15);
+    ctx.fillRect(0, 285, WORLD_WIDTH, 15);
+    ctx.fillRect(0, 410, WORLD_WIDTH, 15);
 
-    ctx.fillRect(0, 865, WORLD_W, 15);
-    ctx.fillRect(0, 990, WORLD_W, 15);
+    ctx.fillRect(0, 865, WORLD_WIDTH, 15);
+    ctx.fillRect(0, 990, WORLD_WIDTH, 15);
 
-    ctx.fillRect(0, 1415, WORLD_W, 15);
-    ctx.fillRect(0, 1540, WORLD_W, 15);
+    ctx.fillRect(0, 1415, WORLD_WIDTH, 15);
+    ctx.fillRect(0, 1540, WORLD_WIDTH, 15);
 
     // Vertical sidewalks
-    ctx.fillRect(235, 0, 15, WORLD_H);
-    ctx.fillRect(360, 0, 15, WORLD_H);
+    ctx.fillRect(235, 0, 15, WORLD_HEIGHT);
+    ctx.fillRect(360, 0, 15, WORLD_HEIGHT);
 
-    ctx.fillRect(1105, 0, 15, WORLD_H);
-    ctx.fillRect(1230, 0, 15, WORLD_H);
+    ctx.fillRect(1105, 0, 15, WORLD_HEIGHT);
+    ctx.fillRect(1230, 0, 15, WORLD_HEIGHT);
 
-    ctx.fillRect(1515, 0, 15, WORLD_H);
-    ctx.fillRect(1640, 0, 15, WORLD_H);
+    ctx.fillRect(1515, 0, 15, WORLD_HEIGHT);
+    ctx.fillRect(1640, 0, 15, WORLD_HEIGHT);
 
-    ctx.fillRect(2035, 0, 15, WORLD_H);
-    ctx.fillRect(2160, 0, 15, WORLD_H);
+    ctx.fillRect(2035, 0, 15, WORLD_HEIGHT);
+    ctx.fillRect(2160, 0, 15, WORLD_HEIGHT);
 
     // =========================
     // ROAD LANE MARKINGS
@@ -631,14 +631,14 @@ function drawWorld() {
     ctx.fillStyle = "#f7d85a";
 
     // Horizontal lane markings
-    for (let x = 0; x < WORLD_W; x += 80) {
+    for (let x = 0; x < WORLD_WIDTH; x += 80) {
         ctx.fillRect(x, 353, 42, 5);
         ctx.fillRect(x, 933, 42, 5);
         ctx.fillRect(x, 1483, 42, 5);
     }
 
     // Vertical lane markings
-    for (let y = 0; y < WORLD_H; y += 80) {
+    for (let y = 0; y < WORLD_HEIGHT; y += 80) {
         ctx.fillRect(303, y, 5, 42);
         ctx.fillRect(1173, y, 5, 42);
         ctx.fillRect(1583, y, 5, 42);
@@ -652,8 +652,8 @@ function drawWorld() {
     ctx.strokeStyle = "rgba(35,100,45,0.28)";
     ctx.lineWidth = 2;
 
-    for (let x = 70; x < WORLD_W; x += 120) {
-        for (let y = 80; y < WORLD_H; y += 110) {
+    for (let x = 70; x < WORLD_WIDTH; x += 120) {
+        for (let y = 80; y < WORLD_HEIGHT; y += 110) {
 
             // Don't clutter the roads
             const onHorizontalRoad =
