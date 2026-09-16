@@ -1152,38 +1152,61 @@ function gameLoop() {
 
 gameLoop();
 /* ========================================
-   TQ QUEST — AVATAR SELECTION
+   TQ QUEST — HERO SELECTION
 ======================================== */
 
-let selectedCharacter = null;
+let selectedCharacter = "";
 
 const characterCards = document.querySelectorAll(".characterCard");
 const characterSelect = document.getElementById("characterSelect");
 const startQuestButton = document.getElementById("startQuest");
 
-characterCards.forEach(card => {
-    card.addEventListener("click", () => {
+characterCards.forEach(function(card) {
 
-        characterCards.forEach(c => {
-            c.classList.remove("selected");
+    card.addEventListener("click", function(event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        // Remove previous selection
+        characterCards.forEach(function(otherCard) {
+            otherCard.classList.remove("selected");
         });
 
+        // Select this hero
         card.classList.add("selected");
 
-        selectedCharacter = card.dataset.character;
+        // Save selected hero
+        selectedCharacter = card.getAttribute("data-character");
+
+        console.log("Selected hero:", selectedCharacter);
+
     });
+
 });
 
-startQuestButton.addEventListener("click", () => {
 
+startQuestButton.addEventListener("click", function(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Make sure a hero was selected
     if (!selectedCharacter) {
-        alert("Choose your hero first!");
+
+        alert("Please choose your hero first!");
+
         return;
+
     }
 
+    console.log("Starting TQ QUEST as:", selectedCharacter);
+
+    // Hide character selection
     characterSelect.style.display = "none";
 
-    console.log("TQ QUEST HERO:", selectedCharacter);
+    // Make sure the game is visible
+    canvas.style.display = "block";
 
 });
 </script>
